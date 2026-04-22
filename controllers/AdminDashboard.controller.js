@@ -1,65 +1,80 @@
 import Order from "../models/OrderModel.js";
-import Product from "../models/ProductModel.js";
 import Commerce from "../models/CommerceModel.js";
-import Users from "../models/UserModel.js";
-import Delivery from "../models/DeliveryModel.js";
+import Product from "../models/ProductModel.js";
+import User from "../models/UserModel.js";
 import { Roles } from "../utils/enums/roles.js";
 
-function getTodayRange() {
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0);
+// GET /api/admin/dashboard
+export const getDashboardMetrics = async (req, res, next) => {
+  try {
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
 
-    const tomorrowStart = new Date(todayStart);
-    tomorrowStart.setDate(tomorrowStart.getDate() + 1);
+    const [
+      totalOrders,
+      todayOrders,
+      activeCommerces,
+      inactiveCommerces,
+      activeClients,
+      inactiveClients,
+      activeDeliveries,
+      inactiveDeliveries,
+      totalProducts
+    ] = await Promise.all([
+      Order.countDocuments(),
 
-    return { todayStart, tomorrowStart };
-}
+      Order.countDocuments({
+        createdAt: { $gte: startOfToday }
+      }),
 
-export async function getHomeDashboard(req, res, next) {
-    try {
-        const { todayStart, tomorrowStart } = getTodayRange();
+      Commerce.countDocuments({ isActive: true }),
+      Commerce.countDocuments({ isActive: false }),
 
-        const [
-            totalOrders,
-            todayOrders,
-            activeCommerces,
-            inactiveCommerces,
-            activeClients,
-            inactiveClients,
-            activeDeliveries,
-            inactiveDeliveries,
-            totalProducts
-        ] = await Promise.all([
-            Order.countDocuments(),
-            Order.countDocuments({
-                createdAt: { $gte: todayStart, $lt: tomorrowStart }
-            }),
-            Commerce.countDocuments({ isActive: true }),
-            Commerce.countDocuments({ isActive: false }),
-            Users.countDocuments({ role: Roles.CLIENT, isActive: true }),
-            Users.countDocuments({ role: Roles.CLIENT, isActive: false }),
-            Delivery.countDocuments({ role: Roles.DELIVERY, isActive: true }),
-            Delivery.countDocuments({ role: Roles.DELIVERY, isActive: false }),
-            Product.countDocuments()
-        ]);
+      User.countDocuments({
+        role: Roles.CLIENT,
+        isActive: true
+      }),
 
-        return res.render("AdminDashboard/Index", {
-            totalOrders,
-            todayOrders,
-            activeCommerces,
-            inactiveCommerces,
-            activeClients,
-            inactiveClients,
-            activeDeliveries,
-            inactiveDeliveries,
-            totalProducts,
-            layout: "admin-layout",
-            title: "Admin Dashboard",
-            "page-title": "Admin Dashboard"
-        });
-    } catch (err) {
-        console.error("Error loading dashboard:", err);
-        req.flash("error", "Error al cargar el dashboard.");
-        return res.redirect("/AdminDashboard");
-    }
-}
+      User.countDocuments({
+        role: Roles.CLIENT,
+        isActive: false
+      }),
+
+      User.countDocuments({
+        role: Roles.DELIVERY,
+        isActive: true
+      }),
+
+      User.countDocuments({
+        role: Roles.DELIVERY,
+        isActive: false
+      }),
+
+      Product.countDocuments()
+    ]);
+
+    return res.status(200).json({
+      orders: {
+        total: totalOrders,
+        today: todayOrders
+      },
+      commerces: {
+        active: activeCommerces,
+        inactive: inactiveCommerces
+      },
+      clients: {
+        active: activeClients,
+        inactive: inactiveClients
+      },
+      deliveries: {
+        active: activeDeliveries,
+        inactive: inactiveDeliveries
+      },
+      products: {
+        total: totalProducts
+      }
+    });
+  } catch (error) {
+    return next(error);
+  }
+};

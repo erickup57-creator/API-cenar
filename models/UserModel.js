@@ -32,9 +32,7 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true,
-    trim: true,
-    match: [/^\d{7,15}$/, "El telefono solo debe contener numeros y tener entre 7 y 15 digitos."]
+    required: true
   },
   password: {
     type: String,

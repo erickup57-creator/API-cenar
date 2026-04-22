@@ -1,21 +1,28 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const favoriteSchema = new mongoose.Schema({
+const favoriteSchema = new mongoose.Schema(
+  {
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users",
+      required: true,
+      index: true
     },
     commerceId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Commerce',
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Commerce",
+      required: true,
+      index: true
     }
-}, {
+  },
+  {
     timestamps: true,
-    collection: 'Favorites'
-});
+    collection: "Favorites"
+  }
+);
 
-const Favorite = mongoose.model('Favorite', favoriteSchema);
+favoriteSchema.index({ userId: 1, commerceId: 1 }, { unique: true });
+
+const Favorite = mongoose.model("Favorite", favoriteSchema);
 
 export default Favorite;
