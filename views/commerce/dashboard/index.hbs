@@ -1,0 +1,56 @@
+<section class="commerce-shell">
+  <div class="commerce-panel">
+    <div class="mb-4">
+      <h1 class="commerce-title">Home del comercio</h1>
+      <p class="commerce-subtitle mb-0 mt-2">Pedidos recibidos por tu comercio.</p>
+    </div>
+
+    {{#if loadError}}
+      <div class="alert alert-danger py-2 mb-3" role="alert">
+        No se pudieron cargar los pedidos del comercio.
+      </div>
+    {{/if}}
+
+    {{#if hasOrders}}
+      <div class="d-flex flex-column gap-2">
+        {{#each ordersList}}
+          <a href="/commerce/orders/{{id}}" class="commerce-item commerce-link-card">
+            <div class="d-flex flex-column flex-sm-row gap-3 align-items-sm-start">
+              {{#if commerceLogoUrl}}
+                <img src="{{commerceLogoUrl}}" alt="Logo {{commerceName}}" class="commerce-logo commerce-logo-sm flex-shrink-0" />
+              {{else}}
+                <div class="commerce-placeholder commerce-placeholder-sm d-flex align-items-center justify-content-center flex-shrink-0">
+                  <i class="bi bi-shop"></i>
+                </div>
+              {{/if}}
+
+              <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                  <h2 class="h6 fw-semibold text-dark mb-0 text-break">{{commerceName}}</h2>
+                  {{#if (eq status "pendiente")}}
+                    <span class="badge text-bg-warning align-self-start">Pendiente</span>
+                  {{/if}}
+                  {{#if (eq status "en proceso")}}
+                    <span class="badge text-bg-primary align-self-start">En proceso</span>
+                  {{/if}}
+                  {{#if (eq status "completado")}}
+                    <span class="badge text-bg-success align-self-start">Completado</span>
+                  {{/if}}
+                </div>
+
+                <div class="commerce-meta mt-2">
+                  {{productsCount}} productos | {{totalLabel}}
+                </div>
+                <div class="text-muted small">{{createdAtLabel}}</div>
+              </div>
+            </div>
+          </a>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="commerce-empty p-3" role="alert">
+        <i class="bi bi-info-circle me-1"></i>No hay pedidos para mostrar.
+      </div>
+    {{/if}}
+  </div>
+</section>

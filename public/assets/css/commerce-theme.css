@@ -1,0 +1,163 @@
+body {
+  background: #032f3a;
+}
+
+main.container {
+  max-width: 100%;
+  margin-top: 0 !important;
+  padding: 0;
+}
+
+.commerce-shell {
+  min-height: calc(100vh - 56px);
+  display: grid;
+  place-items: start center;
+  padding: 42px 16px;
+}
+
+.commerce-panel {
+  width: 100%;
+  max-width: 980px;
+  background: #ececec;
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+}
+
+.commerce-panel-narrow {
+  max-width: 640px;
+}
+
+.commerce-title {
+  margin: 0;
+  color: #1f1f1f;
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.commerce-subtitle,
+.commerce-meta {
+  color: #666;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.commerce-card,
+.commerce-item,
+.commerce-empty {
+  background: #f8f9fa;
+  border: 1px solid #b9c6ce;
+  border-radius: 6px;
+}
+
+.commerce-card {
+  padding: 16px;
+}
+
+.commerce-item {
+  padding: 14px;
+}
+
+.commerce-link-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.commerce-link-card:hover {
+  border-color: #19a8bd;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  color: inherit;
+  transform: translateY(-1px);
+}
+
+.commerce-logo,
+.commerce-thumb,
+.commerce-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.commerce-logo-sm,
+.commerce-placeholder-sm {
+  width: 44px;
+  height: 44px;
+}
+
+.commerce-logo-lg,
+.commerce-placeholder-lg {
+  width: 72px;
+  height: 72px;
+}
+
+.commerce-placeholder {
+  background: rgba(28, 166, 189, 0.16);
+  color: #168ca0;
+}
+
+.commerce-input {
+  background: #e9ecef;
+  border: 1px solid #b9c6ce;
+  color: #1e2428;
+  padding: 10px 12px;
+}
+
+.commerce-input:focus {
+  border-color: #19a8bd;
+  box-shadow: 0 0 0 0.18rem rgba(25, 168, 189, 0.25);
+  background: #f4f7f9;
+}
+
+.commerce-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: #1ca6bd;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.commerce-submit:hover {
+  background: #168ca0;
+  color: #fff;
+}
+
+.commerce-back,
+.commerce-action,
+.commerce-danger {
+  border-radius: 4px;
+  font-weight: 600;
+  padding: 9px 12px;
+}
+
+.commerce-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.commerce-row {
+  border-bottom: 1px solid #d4dde2;
+}
+
+.commerce-row:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 575.98px) {
+  .commerce-shell {
+    padding: 24px 12px;
+  }
+
+  .commerce-panel {
+    padding: 18px;
+  }
+}

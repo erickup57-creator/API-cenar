@@ -1,0 +1,42 @@
+<section class="admin-shell">
+  <div class="admin-panel admin-panel-narrow">
+    <div class="mb-4">
+      <h1 class="admin-title">
+        {{#if editMode}}Editar configuracion{{else}}Crear configuracion{{/if}}
+      </h1>
+      <p class="admin-subtitle mb-0 mt-2">Define el porcentaje de ITBIS utilizado en los pedidos.</p>
+    </div>
+
+    <form action="/configurations/{{#if editMode}}edit{{else}}save{{/if}}" method="post">
+      <div class="mb-3">
+        <label class="form-label mb-1" for="itbis">ITBIS</label>
+        <div class="input-group">
+          <input
+            id="itbis"
+            type="number"
+            class="form-control admin-input"
+            name="itbis"
+            required
+            step="0.01"
+            min="0"
+            value="{{#if editMode}}{{configuration.itbis}}{{/if}}"
+          />
+          <span class="input-group-text">%</span>
+        </div>
+      </div>
+
+      {{#if editMode}}
+        <input type="hidden" name="id" value="{{configuration._id}}">
+      {{/if}}
+
+      <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+        <a href="/configurations" class="btn btn-outline-secondary admin-back flex-fill">
+          <i class="bi bi-arrow-left me-1"></i>Volver
+        </a>
+        <button type="submit" class="admin-submit flex-fill">
+          <i class="bi bi-floppy me-1"></i>{{#if editMode}}Actualizar{{else}}Guardar{{/if}}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

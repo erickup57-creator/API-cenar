@@ -1,0 +1,68 @@
+<section class="admin-shell">
+  <div class="admin-panel">
+    <div class="mb-4">
+      <h1 class="admin-title">Delivery</h1>
+      <p class="admin-subtitle mb-0 mt-2">Listado de repartidores registrados en AppCenar.</p>
+    </div>
+
+    {{#if hasDeliveries}}
+      <div class="admin-grid">
+        {{#each deliveriesList}}
+          <article class="admin-item">
+            <div class="d-flex gap-3 align-items-start mb-3">
+              {{#if this.profileImageUrl}}
+                <div class="admin-placeholder d-flex align-items-center justify-content-center flex-shrink-0">
+                  <img
+                    src="{{this.profileImageUrl}}"
+                    alt="Foto de {{this.name}} {{this.lastName}}"
+                    class="admin-logo"
+                    onerror="this.classList.add('d-none'); this.nextElementSibling.classList.remove('d-none');"
+                  />
+                  <i class="bi bi-truck fs-4 d-none"></i>
+                </div>
+              {{else}}
+                <div class="admin-icon d-flex align-items-center justify-content-center flex-shrink-0">
+                  <i class="bi bi-truck fs-4"></i>
+                </div>
+              {{/if}}
+              <div style="min-width: 0;">
+                <h2 class="h6 fw-bold text-dark mb-1 text-break">{{this.name}} {{this.lastName}}</h2>
+                <p class="text-muted small mb-0 text-break">{{this.email}}</p>
+              </div>
+            </div>
+
+            <div class="admin-divider pt-3">
+              <div class="d-flex justify-content-between gap-2 small mb-2">
+                <span>Telefono</span>
+                <strong class="text-break text-end">{{this.phone}}</strong>
+              </div>
+              <div class="d-flex justify-content-between gap-2 small mb-3">
+                <span>Pedidos entregados</span>
+                <strong>{{this.ordersCount}}</strong>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center gap-2">
+                {{#if this.isActive}}
+                  <span class="admin-status admin-status-active">Activo</span>
+                {{else}}
+                  <span class="admin-status admin-status-inactive">Inactivo</span>
+                {{/if}}
+
+                <form action="/AdminDelivery/status/{{this._id}}" method="post">
+                  <input type="hidden" name="status" value="{{#if this.isActive}}false{{else}}true{{/if}}">
+                  <button type="submit" class="btn btn-sm {{#if this.isActive}}btn-outline-danger{{else}}btn-outline-success{{/if}} admin-action" onclick="return confirm('Seguro que deseas cambiar el estado de este delivery?')">
+                    {{#if this.isActive}}Inactivar{{else}}Activar{{/if}}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </article>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="admin-empty p-3" role="alert">
+        <i class="bi bi-info-circle me-1"></i>No hay deliverys registrados.
+      </div>
+    {{/if}}
+  </div>
+</section>

@@ -1,0 +1,149 @@
+{{#section "styles"}}
+<style>
+  body {
+    background: #032f3a;
+  }
+
+  main.container {
+    max-width: 100%;
+    margin-top: 0 !important;
+    padding: 0;
+  }
+
+  .orders-shell {
+    min-height: calc(100vh - 56px);
+    display: grid;
+    place-items: start center;
+    padding: 42px 16px;
+  }
+
+  .orders-panel {
+    width: 100%;
+    max-width: 760px;
+    background: #ececec;
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+  }
+
+  .orders-title {
+    margin: 0;
+    color: #1f1f1f;
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .orders-subtitle {
+    color: #666;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .orders-item {
+    display: block;
+    background: #f8f9fa;
+    border: 1px solid #b9c6ce;
+    border-radius: 6px;
+    padding: 14px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .orders-item:hover {
+    border-color: #19a8bd;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+    color: inherit;
+  }
+
+  .orders-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(28, 166, 189, 0.16);
+    color: #168ca0;
+  }
+
+  .orders-badge {
+    background: #1ca6bd;
+    color: #fff;
+    border-radius: 4px;
+    font-weight: 600;
+    padding: 5px 8px;
+  }
+
+  .orders-empty {
+    background: #f8f9fa;
+    border: 1px solid #b9c6ce;
+    color: #4f4f4f;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 575.98px) {
+    .orders-shell {
+      padding: 24px 12px;
+    }
+
+    .orders-panel {
+      padding: 18px;
+    }
+  }
+</style>
+{{/section}}
+
+<section class="orders-shell">
+  <div class="orders-panel">
+    <div class="mb-4">
+      <h1 class="orders-title">Mis pedidos</h1>
+      <p class="orders-subtitle mb-0 mt-2">Historial de ordenes realizadas.</p>
+    </div>
+
+    {{#if errors.length}}
+      <div class="alert alert-danger py-2" role="alert">
+        {{#each errors}}
+          <p class="mb-0">{{this}}</p>
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{#if success.length}}
+      <div class="alert alert-success py-2" role="alert">
+        {{#each success}}
+          <p class="mb-0">{{this}}</p>
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{#if hasOrders}}
+      <div class="d-flex flex-column gap-2">
+        {{#each ordersList}}
+          <a href="/order/detail/{{this.id}}" class="orders-item">
+            <div class="d-flex flex-column flex-sm-row gap-3 align-items-sm-start">
+              <div class="orders-icon d-flex align-items-center justify-content-center flex-shrink-0">
+                <i class="bi bi-receipt-cutoff"></i>
+              </div>
+
+              <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                  <h2 class="h6 fw-semibold text-dark mb-0 text-break">{{this.commerceName}}</h2>
+                  <span class="orders-badge align-self-start">{{this.status}}</span>
+                </div>
+
+                <div class="text-muted small mt-2">
+                  {{this.productsCount}} productos | {{this.totalLabel}}
+                </div>
+                <div class="text-muted" style="font-size: 0.75rem;">{{this.createdAtLabel}}</div>
+              </div>
+            </div>
+          </a>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="orders-empty p-3" role="alert">
+        <i class="bi bi-info-circle me-1"></i>No tienes pedidos aun.
+      </div>
+    {{/if}}
+  </div>
+</section>

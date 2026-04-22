@@ -1,0 +1,143 @@
+{{#section "styles"}}
+<style>
+  header {
+    display: none;
+  }
+
+  main.container {
+    max-width: 100%;
+    margin-top: 0 !important;
+    padding-top: 0;
+  }
+
+  body {
+    background: #032f3a;
+  }
+
+  .login-shell {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ececec;
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+  }
+
+  .login-title {
+    margin: 0 0 18px;
+    color: #1f1f1f;
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .login-input {
+    background: #e9ecef;
+    border: 1px solid #b9c6ce;
+    color: #1e2428;
+    padding: 10px 12px;
+  }
+
+  .login-input:focus {
+    border-color: #19a8bd;
+    box-shadow: 0 0 0 0.18rem rgba(25, 168, 189, 0.25);
+    background: #f4f7f9;
+  }
+
+  .login-submit {
+    width: 100%;
+    border: 0;
+    background: #1ca6bd;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 4px;
+  }
+
+  .login-submit:hover {
+    background: #168ca0;
+  }
+
+  .login-subtext {
+    margin: 12px 0 0;
+    text-align: center;
+    color: #666;
+    font-weight: 600;
+  }
+
+  .login-subtext a {
+    color: #4f4f4f;
+    text-decoration: none;
+    border-bottom: 1px solid #8a8a8a;
+  }
+
+  .login-links {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 0.92rem;
+  }
+</style>
+{{/section}}
+
+<div class="login-shell">
+  <div class="login-card">
+    <h1 class="login-title">Iniciar sesion</h1>
+
+    {{#if registered}}
+    <div class="alert alert-success py-2 mb-3">Cuenta creada. Revisa tu correo para activarla.</div>
+    {{/if}}
+
+    {{#if activated}}
+    <div class="alert alert-success py-2 mb-3">Cuenta activada. Ya puedes iniciar sesion.</div>
+    {{/if}}
+
+    {{#if hasErrors}}
+    {{#each errors}}
+    <div class="alert alert-danger py-2 mb-2">{{this}}</div>
+    {{/each}}
+    {{/if}}
+
+    {{#if inactive}}
+    <div class="alert alert-warning py-2 mb-3">Tu cuenta esta inactiva. Revisa tu correo.</div>
+    {{/if}}
+
+    <form action="/user/login" method="POST">
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control login-input"
+          id="identifier"
+          name="identifier"
+          placeholder="johndoe@gmail.com"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control login-input"
+          id="password"
+          name="password"
+          placeholder="Contrasena"
+          required
+        />
+      </div>
+
+      <button type="submit" class="login-submit">Iniciar sesion</button>
+    </form>
+
+    <p class="login-subtext">o, <a href="/user/register">registrate</a></p>
+    <div class="login-links">
+      <a href="/user/forgot-password">Olvide mi contrasena</a>
+      <span class="mx-2">|</span>
+      <a href="/user/register-commerce">Registrar comercio</a>
+    </div>
+  </div>
+</div>

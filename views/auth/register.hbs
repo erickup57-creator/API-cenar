@@ -1,0 +1,259 @@
+{{#section "styles"}}
+<style>
+  header {
+    display: none;
+  }
+
+  main.container {
+    max-width: 100%;
+    margin-top: 0 !important;
+    padding-top: 0;
+  }
+
+  body {
+    background: #032f3a;
+  }
+
+  .signup-shell {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 22px 14px;
+  }
+
+  .signup-card {
+    width: 100%;
+    max-width: 620px;
+    background: #ececec;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 0.93rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+  }
+
+  .signup-title {
+    margin: 0 0 10px;
+    color: #1f1f1f;
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .signup-subtitle {
+    margin: 0 0 10px;
+    color: #5e5e5e;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .signup-label {
+    color: #2e2e2e;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .signup-input,
+  .signup-select {
+    background: #e9ecef;
+    border: 1px solid #b9c6ce;
+    color: #1e2428;
+    padding: 7px 10px;
+    font-size: 0.9rem;
+  }
+
+  .signup-input:focus,
+  .signup-select:focus {
+    border-color: #19a8bd;
+    box-shadow: 0 0 0 0.18rem rgba(25, 168, 189, 0.25);
+    background: #f4f7f9;
+  }
+
+  .signup-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .signup-primary {
+    border: 0;
+    background: #1ca6bd;
+    color: #fff;
+    font-weight: 600;
+    padding: 7px 12px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+  }
+
+  .signup-primary:hover {
+    background: #168ca0;
+  }
+
+  .signup-secondary {
+    border: 1px solid #848484;
+    color: #3d3d3d;
+    background: transparent;
+    font-weight: 600;
+    padding: 7px 12px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  .signup-secondary:hover {
+    background: #dfdfdf;
+  }
+
+  .signup-links {
+    margin-top: 9px;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 576px) {
+    .signup-title {
+      font-size: 1.25rem;
+    }
+  }
+</style>
+{{/section}}
+
+<div class="signup-shell">
+  <div class="signup-card">
+    <h1 class="signup-title">Registrarse</h1>
+    <p class="signup-subtitle">Crea tu cuenta para cliente o delivery</p>
+
+    {{#if errors.length}}
+    <div class="alert alert-danger py-2" role="alert">
+      <ul class="mb-0 small">
+        {{#each errors}}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+
+    <form action="/user/register" method="POST" enctype="multipart/form-data" novalidate>
+      <div class="row g-1">
+        <div class="col-12 col-md-6">
+          <label for="name" class="form-label signup-label">Nombre</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            class="form-control signup-input"
+            value="{{formData.name}}"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="lastName" class="form-label signup-label">Apellido</label>
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            class="form-control signup-input"
+            value="{{formData.lastName}}"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="username" class="form-label signup-label">Usuario</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            class="form-control signup-input"
+            value="{{formData.username}}"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="email" class="form-label signup-label">Correo</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class="form-control signup-input"
+            value="{{formData.email}}"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="phone" class="form-label signup-label">Telefono</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            class="form-control signup-input"
+            value="{{formData.phone}}"
+            inputmode="numeric"
+            pattern="[0-9]{7,15}"
+            maxlength="15"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="role" class="form-label signup-label">Rol</label>
+          <select id="role" name="role" class="form-select signup-select" required>
+            <option value="">Selecciona un rol</option>
+            <option value="client" {{#if (eq formData.role "client")}}selected{{/if}}>Cliente</option>
+            <option value="delivery" {{#if (eq formData.role "delivery")}}selected{{/if}}>Delivery</option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <label for="profileImage" class="form-label signup-label">Foto de perfil</label>
+          <input
+            id="profileImage"
+            name="profileImage"
+            type="file"
+            class="form-control signup-input"
+            accept="image/*"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="password" class="form-label signup-label">Contrasena</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            class="form-control signup-input"
+            minlength="8"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="confirmPassword" class="form-label signup-label">Confirmar contrasena</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            class="form-control signup-input"
+            minlength="8"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="signup-actions">
+        <button type="submit" class="signup-primary">Crear cuenta</button>
+        <a href="/user/login" class="signup-secondary">Volver al login</a>
+      </div>
+
+      <div class="signup-links">
+        <a href="/user/register-commerce">Registrar comercio</a>
+      </div>
+    </form>
+  </div>
+</div>

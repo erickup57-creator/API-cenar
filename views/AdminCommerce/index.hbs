@@ -1,0 +1,69 @@
+<section class="admin-shell">
+  <div class="admin-panel">
+    <div class="mb-4">
+      <h1 class="admin-title">Comercios</h1>
+      <p class="admin-subtitle mb-0 mt-2">Listado de comercios registrados y su estado operativo.</p>
+    </div>
+
+    {{#if hasCommerces}}
+      <div class="admin-grid">
+        {{#each commercesList}}
+          <article class="admin-item">
+            <div class="d-flex gap-3 align-items-start mb-3">
+              {{#if this.profileImageUrl}}
+                <img src="{{this.profileImageUrl}}" alt="{{this.name}}" class="admin-logo flex-shrink-0" />
+              {{else}}
+                <div class="admin-placeholder d-flex align-items-center justify-content-center flex-shrink-0">
+                  <i class="bi bi-shop fs-4"></i>
+                </div>
+              {{/if}}
+
+              <div style="min-width: 0;">
+                <h2 class="h6 fw-bold text-dark mb-1 text-break">{{this.name}}</h2>
+                <p class="text-muted small mb-0 text-break">{{#if this.email}}{{this.email}}{{else}}Sin correo{{/if}}</p>
+              </div>
+            </div>
+
+            <div class="admin-divider pt-3">
+              <div class="d-flex justify-content-between gap-2 small mb-2">
+                <span>Pedidos</span>
+                <strong>{{this.ordersCount}}</strong>
+              </div>
+              <div class="d-flex justify-content-between gap-2 small mb-2">
+                <span>Telefono</span>
+                <strong class="text-break text-end">{{#if this.phone}}{{this.phone}}{{else}}-{{/if}}</strong>
+              </div>
+              <div class="d-flex justify-content-between gap-2 small mb-2">
+                <span>Apertura</span>
+                <strong>{{#if this.openingTime}}{{this.openingTime}}{{else}}-{{/if}}</strong>
+              </div>
+              <div class="d-flex justify-content-between gap-2 small mb-3">
+                <span>Cierre</span>
+                <strong>{{#if this.closingTime}}{{this.closingTime}}{{else}}-{{/if}}</strong>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center gap-2">
+                {{#if this.isActive}}
+                  <span class="admin-status admin-status-active">Activo</span>
+                {{else}}
+                  <span class="admin-status admin-status-inactive">Inactivo</span>
+                {{/if}}
+
+                <form action="/AdminCommerce/status/{{this._id}}" method="post">
+                  <input type="hidden" name="status" value="{{#if this.isActive}}false{{else}}true{{/if}}">
+                  <button type="submit" class="btn btn-sm {{#if this.isActive}}btn-outline-danger{{else}}btn-outline-success{{/if}} admin-action" onclick="return confirm('Seguro que deseas cambiar el estado de este comercio?')">
+                    {{#if this.isActive}}Inactivar{{else}}Activar{{/if}}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </article>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="admin-empty p-3" role="alert">
+        <i class="bi bi-info-circle me-1"></i>No hay comercios registrados.
+      </div>
+    {{/if}}
+  </div>
+</section>

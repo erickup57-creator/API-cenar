@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/assets/css/lib/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/assets/css/admin-theme.css" />
+  {{{_sections.styles}}}
+  <title>{{#if title}}{{title}}{{else}}{{page-title}}{{/if}}</title>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="/AdminDashboard"><i class="bi bi-shield-check"></i> AppCenar Admin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavMain">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavMain">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/AdminDashboard"><i class="bi bi-house"></i> Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/AdminClient"><i class="bi bi-people"></i> Listado de clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/AdminDelivery"><i class="bi bi-truck"></i> Listado de delivery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/AdminCommerce"><i class="bi bi-shop"></i> Listado de comercios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/configurations"><i class="bi bi-gear"></i> Configuracion</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/commerceType"><i class="bi bi-tags"></i> Tipos de comercio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin"><i class="bi bi-person-gear"></i> Admin</a>
+            </li>
+            <li class="nav-item">
+              <form action="/user/logout" method="post" class="d-inline">
+                <button type="submit" class="nav-link btn btn-link text-decoration-none border-0">
+                  <i class="bi bi-box-arrow-right"></i> Cerrar sesion
+                </button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mt-4">
+    {{{body}}}
+  </main>
+
+  <script src="/assets/js/lib/bootstrap/bootstrap.bundle.min.js"></script>
+  {{{_sections.scripts}}}
+</body>
+
+</html>

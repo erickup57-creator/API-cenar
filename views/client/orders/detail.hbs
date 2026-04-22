@@ -1,0 +1,158 @@
+{{#section "styles"}}
+<style>
+  body {
+    background: #032f3a;
+  }
+
+  main.container {
+    max-width: 100%;
+    margin-top: 0 !important;
+    padding: 0;
+  }
+
+  .order-detail-shell {
+    min-height: calc(100vh - 56px);
+    display: grid;
+    place-items: start center;
+    padding: 42px 16px;
+  }
+
+  .order-detail-card {
+    width: 100%;
+    max-width: 620px;
+    background: #ececec;
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+  }
+
+  .order-detail-title {
+    color: #1f1f1f;
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .order-status {
+    background: #1ca6bd;
+    color: #fff;
+    border-radius: 4px;
+    font-weight: 600;
+    padding: 5px 8px;
+  }
+
+  .order-products {
+    background: #f8f9fa;
+    border: 1px solid #b9c6ce;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .order-product-row {
+    border-bottom: 1px solid #d4dde2;
+  }
+
+  .order-product-row:last-child {
+    border-bottom: 0;
+  }
+
+  .order-total-row {
+    border-top: 1px solid #d4dde2;
+  }
+
+  .order-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 0;
+    background: #1ca6bd;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  .order-back:hover {
+    background: #168ca0;
+    color: #fff;
+  }
+
+  @media (max-width: 575.98px) {
+    .order-detail-shell {
+      padding: 24px 12px;
+    }
+
+    .order-detail-card {
+      padding: 18px;
+    }
+  }
+</style>
+{{/section}}
+
+<section class="order-detail-shell">
+  <div class="order-detail-card">
+    <div class="text-center mb-4">
+      {{#if order.commerceId.logo}}
+        <img
+          src="{{order.commerceId.logo}}"
+          alt="logo"
+          width="60"
+          height="60"
+          class="rounded-circle mb-2"
+          style="object-fit: cover;"
+        />
+      {{else}}
+        <div class="rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background: rgba(28, 166, 189, 0.16); color: #168ca0;">
+          <i class="bi bi-shop fs-4"></i>
+        </div>
+      {{/if}}
+
+      <h1 class="order-detail-title mb-2">{{order.commerceId.name}}</h1>
+      <span class="order-status">{{order.status}}</span>
+      <div class="text-muted small mt-2">{{order.createdAt}}</div>
+    </div>
+
+    <div class="order-products mb-3">
+      {{#each order.products}}
+        <div class="order-product-row d-flex align-items-center p-3">
+          {{#if this.image}}
+            <img
+              src="{{this.image}}"
+              alt="{{this.name}}"
+              width="48"
+              height="48"
+              class="rounded me-3"
+              style="object-fit: cover;"
+            />
+          {{else}}
+            <div class="rounded me-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; background: #e9ecef; color: #666;">
+              <i class="bi bi-bag"></i>
+            </div>
+          {{/if}}
+
+          <span class="flex-grow-1 text-dark text-break">{{this.name}}</span>
+          <span class="text-muted small ms-2">RD${{this.price}}</span>
+        </div>
+      {{/each}}
+
+      <div class="px-3 pt-3 pb-1 d-flex justify-content-between text-muted small order-total-row">
+        <span>Subtotal</span>
+        <span>RD${{order.subtotal}}</span>
+      </div>
+      <div class="px-3 pb-2 d-flex justify-content-between text-muted small">
+        <span>ITBIS</span>
+        <span>RD${{order.itbis}}</span>
+      </div>
+      <div class="px-3 pb-3 d-flex justify-content-between order-total-row pt-2">
+        <strong>Total</strong>
+        <strong>RD${{order.total}}</strong>
+      </div>
+    </div>
+
+    <a href="/client/orders" class="order-back">
+      <i class="bi bi-arrow-left me-1"></i>Volver a mis pedidos
+    </a>
+  </div>
+</section>

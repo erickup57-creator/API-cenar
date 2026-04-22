@@ -1,0 +1,139 @@
+<section class="admin-shell">
+  <div class="admin-panel admin-panel-narrow">
+    <div class="mb-4">
+      <h1 class="admin-title">
+        {{#if editMode}}Editar administrador{{else}}Crear administrador{{/if}}
+      </h1>
+      <p class="admin-subtitle mb-0 mt-2">Completa los datos de acceso y contacto.</p>
+    </div>
+
+    {{#if errors}}
+      <div class="alert alert-danger py-2 mb-3" role="alert">
+        <ul class="mb-0 small">
+          {{#each errors}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+
+    <form action="/Admin/{{#if editMode}}edit{{else}}create{{/if}}" method="post">
+      <div class="row g-2">
+        <div class="col-12 col-md-6">
+          <label class="form-label mb-1" for="name">Nombre</label>
+          <input
+            id="name"
+            type="text"
+            class="form-control admin-input"
+            name="name"
+            required
+            value="{{#if editMode}}{{admin.name}}{{else}}{{formData.name}}{{/if}}"
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label mb-1" for="lastName">Apellido</label>
+          <input
+            id="lastName"
+            type="text"
+            class="form-control admin-input"
+            name="lastName"
+            required
+            value="{{#if editMode}}{{admin.lastName}}{{else}}{{formData.lastName}}{{/if}}"
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label mb-1" for="cedula">Cedula</label>
+          <input
+            id="cedula"
+            type="text"
+            class="form-control admin-input"
+            name="cedula"
+            required
+            value="{{#if editMode}}{{admin.cedula}}{{else}}{{formData.cedula}}{{/if}}"
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label mb-1" for="email">Correo</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control admin-input"
+            name="email"
+            required
+            value="{{#if editMode}}{{admin.email}}{{else}}{{formData.email}}{{/if}}"
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label mb-1" for="username">Usuario</label>
+          <input
+            id="username"
+            type="text"
+            class="form-control admin-input"
+            name="username"
+            required
+            value="{{#if editMode}}{{admin.username}}{{else}}{{formData.username}}{{/if}}"
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label mb-1" for="phone">Telefono</label>
+          <input
+            id="phone"
+            type="tel"
+            class="form-control admin-input"
+            name="phone"
+            required
+            inputmode="numeric"
+            pattern="[0-9]{7,15}"
+            maxlength="15"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            value="{{#if editMode}}{{admin.phone}}{{else}}{{formData.phone}}{{/if}}"
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label mb-1" for="password">
+            {{#if editMode}}Nueva contrasena{{else}}Contrasena{{/if}}
+          </label>
+          <input
+            id="password"
+            type="password"
+            class="form-control admin-input"
+            name="password"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label mb-1" for="confirmPassword">
+            {{#if editMode}}Confirmar nueva contrasena{{else}}Confirmar contrasena{{/if}}
+          </label>
+          <input
+            id="confirmPassword"
+            type="password"
+            class="form-control admin-input"
+            name="confirmPassword"
+            required
+          />
+        </div>
+      </div>
+
+      {{#if editMode}}
+        <input type="hidden" name="id" value="{{admin._id}}">
+      {{/if}}
+
+      <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+        <a href="/Admin" class="btn btn-outline-secondary admin-back flex-fill">
+          <i class="bi bi-arrow-left me-1"></i>Volver
+        </a>
+        <button type="submit" class="admin-submit flex-fill">
+          <i class="bi bi-floppy me-1"></i>{{#if editMode}}Actualizar{{else}}Guardar{{/if}}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
