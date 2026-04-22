@@ -11,7 +11,7 @@ import addressesRoutes from "./routes/addresses.routes.js";
 import accountRoutes from "./routes/account.routes.js";
 import commerceType from "./routes/commerceType.routes.js";
 import configuration from "./routes/configuration.routes.js";
-import adminDashboard from "./routes/adminDashboard.routes.js";
+import adminDashboard from "./routes/AdminDashboard.routes.js";
 import adminUsers from "./routes/adminUsers.routes.js";
 import favoritesRoutes from "./routes/favorites.routes.js";
 import categoriesRoutes from "./routes/categories.routes.js";

@@ -1,5 +1,5 @@
 import express from "express";
-import { getDashboardMetrics } from "../controllers/adminDashboard.controller.js";
+import { getDashboardMetrics } from "../controllers/AdminDashboard.controller.js";
 import isAuth, { requireRole } from "../middlewares/auth.middleware.js";
 import { Roles } from "../utils/enums/roles.js";
 
