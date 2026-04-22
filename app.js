@@ -44,9 +44,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/Images", express.static(path.join(projectRoot, "public", "Images")));
 
 // Swagger
-if (process.env.NODE_ENV !== "production") {
-  setupSwagger(app);
-}
+setupSwagger(app);
+
+app.get("/", (req, res) => {
+  res.redirect(302, "/swagger/");
+});
 
 // Rutas
 app.use("/api/auth", authRoutes);
